@@ -1,0 +1,1 @@
+<img src="{{asset('/img/undraw_social_user_lff0.svg')}}">
