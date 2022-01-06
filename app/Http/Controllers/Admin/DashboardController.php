@@ -25,20 +25,7 @@ class DashboardController extends Controller
         $data['user'] = AUTH::user();
         $data['title'] = 'Dashboard';
         $data['menu'] = User_menu::all();
-        $data['hargas'] = Data_harga::orderBy('id', 'desc')->get();
-        $data['harga'] = Data_harga::orderBy('id', 'desc')->first();
-        $data['biayakirim'] = Data_biaya_kirim::orderBy('id', 'desc')->get();
-        $data['komisis'] = Data_komisi::orderBy('id', 'desc')->get();
-        $data['sales'] = Users::whereIn('user_role_id', [1, 2])->count();
-        $data['saless'] = Users::whereIn('user_role_id', [1, 2])->get();
-        $data['tokos'] = Data_toko::all();
-        $data['transaksi'] = Transaksi::orderBy('id', 'desc')->count();
-        $data['trk'] = Transaksi::orderBy('id', 'desc')->limit(3)->get();
-        $data['users'] = Transaksi::select(\DB::raw("COUNT(*) as count"))
-            ->whereYear('created_at', date('Y'))
-            ->groupBy(\DB::raw("Month(created_at)"))
-            ->pluck('count');
-
+        $data['users'] = Users::all();
         return view('admin.dashboard.dashboard', $data);
 
     }

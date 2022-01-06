@@ -1,8 +1,5 @@
 @php
 use Illuminate\Support\Facades\Auth;
-use App\Models\User_role;
-$role = AUTH::User()->user_role_id;
-$roleid = User_role::find($role);
 @endphp
 
 <!DOCTYPE html>
@@ -17,7 +14,7 @@ $roleid = User_role::find($role);
     <meta name="description" content="UD CIPTA INDAH">
     <meta name="keywords" content="UD, bangunan, cirebon">
     <meta name="author" content="Sunset Orange">
-    <title>{{ $title }}</title>
+    <title></title>
     <link rel="apple-touch-icon" href="{{ asset('/images/logo/logosmk.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/images/logo/logosmk.png') }}">
 
@@ -58,86 +55,26 @@ $roleid = User_role::find($role);
 
 
     <!-- BEGIN: Header-->
-    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-dark navbar-shadow">
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center navbar-dark navbar-shadow">
+
         <div class="navbar-container d-flex content">
             <div class="bookmark-wrapper d-flex align-items-center">
-                <ul class="nav navbar-nav d-xl-none">
-                    <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon"
-                                data-feather="menu"></i></a></li>
-                </ul>
+            <a class="navbar-brand" href="">
+                        <img src="{{ asset('/images/logo/logosmk.png') }}" height="40" width="40">
+                        <h3 class="brand-text">CIPTA INDAH</h3>
+            </a>
             </div>
-            <ul class="nav navbar-nav align-items-center ml-auto">
-
-                <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
-                        id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <div class="user-nav d-sm-flex d-none"><span
-                                class="user-name font-weight-bolder">{{ $user->name }}</span><span
-                                class="user-status">{{ $user->user_role->role }}</span></div><span
-                            class="avatar"><img class="round"
-                                src="{{ asset('/images/profile_user/' . $user->image) }}" alt="avatar" height="40"
-                                width="40"><span class="avatar-status-online"></span></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-                        <a class="dropdown-item" href="/user"><i class="mr-50" data-feather="user"></i>
-                            Profile</a>
-
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/logout"><i class="mr-50" data-feather="power"></i> Logout</a>
-                    </div>
-                </li>
-            </ul>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/login" class="btn btn-primary me-md-2" type="button">Login</button></a>
+            <a href="/register" class="btn btn-primary ml-2 mr-2" type="button">Register</button></a>
         </div>
     </nav>
     <!-- END: Header-->
 
 
     <!-- BEGIN: Main Menu-->
-    <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="">
-                        <img src="{{ asset('/images/logo/logosmk.png') }}" height="40" width="40">
-                        <h3 class="brand-text">CIPTA INDAH</h3>
-                    </a></li>
-                <li class="nav-item nav-toggle">
-                    <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
-                        <i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i>
-                        {{-- <i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary"
-                            data-feather="disc" data-ticon="disc"></i> --}}
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="shadow-bottom"></div>
-        <div class="main-menu-content">
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-                <hr>
-                @php
-                    $menu = DB::select('SELECT m.* FROM user_access_menu u , user_menu m WHERE u.user_menu_id = m.id AND u.user_role_id = :role', ['role' => $user->user_role_id]);
-                    // dd($menu);
-                @endphp
-
-
-                @foreach ($menu as $m)
-
-                    {{-- menu 1 --}}
-                    @if ($title == $m->title)
-                        <li class="active nav-item">
-                        @else
-                        <li class=" nav-item">
-                    @endif
-
-                    <a class="d-flex align-items-center" href="{{ $m->url }}"><i
-                            data-feather="{{ $m->icon }}"></i><span class="menu-title text-truncate"
-                            data-i18n="Calendar">{{ $m->title }}</span>
-                    </a>
-                @endforeach
-
-            </ul>
-        </div>
-    </div>
     <!-- END: Main Menu-->
 
     @yield('content')

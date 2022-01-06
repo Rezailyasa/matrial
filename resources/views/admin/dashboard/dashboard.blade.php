@@ -1,10 +1,5 @@
 @php
-// use App\Models\Data_kelas;
-// use App\Models\Setting_kelas_siswa;
-// use App\Models\Setting_kontrak_pengajaran;
-// use App\Models\Setting_materi_pertemuan;
-// use App\Models\Setting_master_materi;
-// use App\Models\Data_jawaban_materi_pembelajaran;
+use App\Models\Users;
 @endphp
 
 @extends('layouts.app')
@@ -38,30 +33,54 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-                {{-- <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-danger" role="alert">
-                            <div class="alert-body">
-                                <strong>Info:</strong> Tahun ajaran aktif saat ini adalah&nbsp;
-                                pilih
-                                untuk
-                                merubah
-                                tahun ajaran aktif. Tahun ajaran yang
-                                dipilih
-                                saat ini <strong class="text-primary">.</strong>
-                                Pilih
-                                tombol
-                                <strong><u>Pilih tahun
-                                        ajaran</u></strong>
-                                untuk melakukan setting kelas siswa.
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <section id="dashboard-analytics">
-                    <div class="row match-height">
                         <!-- Greetings Card starts -->
-                        <div class="col-lg-6 col-md-12 col-sm-12">
+                        <?php
+
+                        //fungsi untuk merubah nama hari menjadi hari indonesia
+                        function hari_ini()
+                        {
+                            switch (date('D')) {
+                                case 'Sun':
+                                    $hari = 'Minggu';
+                                    break;
+                                case 'Mon':
+                                    $hari = 'Senin';
+                                    break;
+                                case 'Tue':
+                                    $hari = 'Selasa';
+                                    break;
+                                case 'Wed':
+                                    $hari = 'Rabu';
+                                    break;
+                                case 'Thu':
+                                    $hari = 'Kamis';
+                                    break;
+                                case 'Fri':
+                                    $hari = 'Jum\'at';
+                                    break;
+                                case 'Sat':
+                                    $hari = 'Sabtu';
+                                    break;
+
+                                default:
+                                    $hari = 'Hari tidak diketahui';
+                                    break;
+                            }
+
+                            return $hari;
+                        }
+
+                        //fungsi untuk merubah format tanggal menjadi tanggal indonesia
+                        function tanggal_indo()
+                        {
+                            $bulan  = [1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+                            $exp    = explode('-', date('d-m-Y'));
+
+                            return $exp[0] . ' ' . $bulan[(int) $exp[1]] . ' ' . $exp[2];
+                        }
+
+                        ?>
                             <div class="card card-congratulations">
                                 <div class="card-body text-center">
                                     <img src="{{ asset('/images/elements/decore-left.png') }}"
@@ -74,179 +93,45 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <h1 class="mb-1 text-white">Welcome {{ $user->name }},</h1>
-                                        <p class="card-text m-auto w-75">
-                                            Dashboard keseluruhan informasi UD CIPTA INDAH.
-                                        </p>
+                                        <p class="mb-0 text-right"><b><i class="fa fa-calendar"></i> <?= hari_ini(); ?>, <?= tanggal_indo(); ?></b></p>
+                                        <hr>
+                                        <h4 class="alert-heading"><i class="fa fa-info-circle"></i><b>WELCOME TO WEBSITE WARUNG FROZEN FOOD</b></h4>
+                                        <p class="mb-5" style="font-size: 16px;">Now You Are Login As <b>{{ $user->name }}</b> With Level <b>ADMIN</b></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- Greetings Card ends -->
 
-                        <!-- Subscribers Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">{{ $sales }}</h2>
-                                    <p class="card-text">Total sales</p>
-                                </div>
-                                <div id="gained-chart"></div>
-                            </div>
+                    <!-- Dashboard Ecommerce Starts -->
+                    <section id="dashboard-ecommerce">
+                        <div class="pricing-free-trial">
+                            <table class="table table-sm table-hover-animation">
+                                <thead>
+                                    <tr>
+                                        <th>ID User</th>
+                                        <th>Nama User</th>
+                                        <th>Profil User</th>
+                                        <th>Email User</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                               @foreach($users as $item)
+                                    <tr>
+                                        <th scope="row">{{$loop->iteration}}</th>
+                                        <td class="@if($item->id==$user->id) text text-danger @else text text-warning @endif">{{$item->id}}</td>
+                                        <td class="@if($item->name==$user->name) text text-danger @else text text-warning @endif">{{$item->name}}</td>
+                                        <td class="@if($item->email==$user->email) text text-danger @else text text-warning @endif">{{$item->email}}</td>
+                                        <td class="@if($item->created_at==$user->created_at) text text-danger @else text text-warning @endif">{{$item->created_at}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- Subscribers Chart Card ends -->
-
-                        <!-- Orders Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">{{ $transaksi }}</h2>
-                                    <p class="card-text">Total Transaksi</p>
-                                </div>
-                                <div id="order-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Orders Chart Card ends -->
+                    </section>
+                    <!-- Dashboard Ecommerce ends -->
                     </div>
-
-
-                    <div class="row match-height">
-                        <!-- Timeline Card -->
-                        <div class="col-lg-4 col-12">
-                            <div class="card card-user-timeline">
-                                <div class="card-header">
-                                    <div class="d-flex align-items-center">
-                                        <i data-feather="list" class="user-timeline-title-icon"></i>
-                                        <h4 class="card-title">Tiga Transaksi Terakhir</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="timeline ml-50">
-                                        @foreach ($trk as $item)
-
-                                            <li class="timeline-item">
-                                                <span
-                                                    class="timeline-point timeline-point-success timeline-point-indicator"></span>
-                                                <div class="timeline-event">
-                                                    <h6>{{ $item->users->name }}</h6>
-                                                    <p>Toko: {{ $item->data_toko->nama_toko }}</p>
-                                                    <div class="media align-items-center">
-                                                        <div class="avatar mr-50">
-                                                            <img src="{{ asset('/images/profile_user/' . $item->users->image) }}"
-                                                                alt="Avatar" width="38" height="38">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h6 class="mb-0">Total: Rp. {{ $item->total }}</h6>
-                                                            <p class="mb-0">Komisi: Rp.
-                                                                {{ $item->data_komisi->komisi }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endforeach
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ Timeline Card -->
-
-                        <!-- Sales Stats Chart Card starts -->
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-start pb-1">
-                                    <div>
-                                        <h4 class="card-title mb-25"></h4>
-                                        {{-- <p class="card-text">Last 6 months</p> --}}
-                                    </div>
-                                    {{-- <div class="dropdown chart-dropdown">
-                                        <i data-feather="more-vertical" class="font-medium-3 cursor-pointer"
-                                            data-toggle="dropdown"></i>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                        </div>
-                                    </div> --}}
-                                </div>
-                                <div class="card-body">
-                                    {{-- <div id="chart" style="height: 300px;"></div> --}}
-                                    <div id="containerr"></div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sales Stats Chart Card ends -->
-
-                        <!-- App Design Card -->
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <div class="card card-app-design">
-                                <div class="card-body">
-                                    <div class="badge badge-light-primary">Tanggal: {{ date('d-M-Y') }}</div>
-                                    <h4 class="card-title mt-1 mb-75 pt-25">Harga saat ini</h4>
-                                    <p class="card-text font-small-2 mb-2">
-                                        Daftar harga dan komisi yang aktif saat ini
-                                    </p>
-                                    <div class="row p-1 mt-0">
-                                        <div class="design-group mb-2 pt-50">
-                                            <h6 class="section-label">Harga:</h6>
-                                            <div class="badge badge-light-warning mr-1">Rp.
-                                                {{ $harga ? $harga->harga : '' }}
-                                            </div>
-                                        </div>
-                                        <div class="design-group mb-2 pt-50">
-                                            <h6 class="section-label">Komisi:</h6>
-                                            @foreach ($komisis as $komisi)
-                                                <div class="badge badge-light-primary mr-1 my-50">Margin Rp.
-                                                    {{ $komisi->margin }} | Komisi Rp. {{ $komisi->komisi }}
-                                                </div><br>
-                                                {{-- <div class="badge badge-light-primary">Wireframe</div> --}}
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="design-group pt-25">
-                                        <h6 class="section-label">Sales</h6>
-                                        @foreach ($saless as $u)
-                                            <div class="avatar">
-                                                <img src="{{ asset('/images/profile_user/' . $u->image) }}" width="34"
-                                                    height="34" alt="Avatar">
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    {{-- <div class="design-planning-wrapper mb-2 py-75">
-                                        <div class="design-planning">
-                                            <p class="card-text mb-25">Due Date</p>
-                                            <h6 class="mb-0">12 Apr, 21</h6>
-                                        </div>
-                                        <div class="design-planning">
-                                            <p class="card-text mb-25">Budget</p>
-                                            <h6 class="mb-0">$49251.91</h6>
-                                        </div>
-                                        <div class="design-planning">
-                                            <p class="card-text mb-25">Cost</p>
-                                            <h6 class="mb-0">$840.99</h6>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-block">Join Team</button> --}}
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ App Design Card -->
-                    </div>
-
-
-                </section>
 
             </div>
         </div>
