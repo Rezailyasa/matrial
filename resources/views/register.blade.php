@@ -24,15 +24,15 @@
                         <!-- Left Text-->
                         <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
                             <div class="w-100 d-lg-flex align-items-center justify-content-center px-5"><img
-                                    class="img-fluid" src="{{ asset('/images/pages/register-v2.svg') }}" alt="Login V2">
+                                    class="img-fluid" src="{{ asset('/images/register-v2.png') }}" alt="Login V2">
                             </div>
                         </div>
                         <!-- /Left Text-->
                         <!-- Login-->
                         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                                <h2 class="card-title font-weight-bold mb-1">Adventure starts here 🚀</h2>
-                                <p class="card-text mb-2">Start your jouurney with us!</p>
+                                <h2 class="card-title font-weight-bold mb-1">SILAHKAN AKSES UD CIPTA INDAH SESUKA ANDA</h2>
+                                <p class="card-text mb-2">Mulai Petualangan Anda Dari Sini</p>
                                 <form method="POST" action="{{ route('register') }}" role="form">
                                     @csrf
                                     @method('POST')
@@ -105,9 +105,8 @@
 
                                     <button type="submit" class="btn btn-primary btn-block" tabindex="4">Sign up</button>
                                 </form>
-                                <p class="text-center mt-2"><span>Already have an account?</span><a
-                                        href="/login"><span>&nbsp;Sign in
-                                            instead</span></a></p>
+                                <p class="text-center mt-2"><span>Anda Sudah Punya Akun???</span><a
+                                        href="/login"><span>&nbsp;Ayoo Langsung Masuk</span></a></p>
                             </div>
                         </div>
                         <!-- /Login-->

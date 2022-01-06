@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\LaporanController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\TransaksiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\menu\MenuController;
 use App\Http\Controllers\menu\SubmenuController;
@@ -34,6 +35,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::get('/', [IndexController::class, 'index']);
+
 Route::get('/notauthorized', [UserController::class, 'notauthorized']);
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -42,7 +45,6 @@ Route::get('/forgotpassword', [AuthController::class, 'forgotpassword'])->name('
 Route::post('/register', [AuthController::class, 'registerAdd'])->name('register');
 Route::middleware(['login'])->group(function () {
     Route::resource('/login', AuthController::class);
-    Route::resource('/', AuthController::class);
 });
 
 Route::get('sendSMS', [NexmoSMSController::class, 'index']);
